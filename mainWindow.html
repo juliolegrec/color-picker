@@ -49,20 +49,29 @@
 		let colorHex = document.getElementById('color-hex');
 
 		window.addEventListener('mousemove', () => {
-			mouse = robot.getMousePos();
+			let mouse = robot.getMousePos();
 			var hex = robot.getPixelColor(mouse.x, mouse.y);
 			colorChip.style.background = `#${hex}`;
 			colorHex.innerText = `#${hex}`;
-			ipcRenderer.send('pixel:color', hex);
+			// ipcRenderer.send('pixel:color', hex);
 
-			if(mouse.x > (window.innerWidth - 150) || mouse.y > (window.innerHeight - 150)) {
+			if(mouse.x > (window.innerHeight - 150) && mouse.y > (window.innerWidth - 150)) {
 				colorChip.style.top = `10px`;
 				colorChip.style.left = `10px`;
 			}
-			else if (mouse.x < (window.innerWidth + 150) || mouse.y > (window.innerHeight + 150))
-				colorChip.style.top = `${window.innerWidth - 150}px`;
-				colorChip.style.left = `${window.innerHeight - 150}px`;
+			// else if(mouse.x < 150 && mouse.y < 150) {
+			// 	colorChip.style.top = `${window.innerHeight - 110}px`;
+			// 	colorChip.style.left = `${window.innerWidth - 110}px`;
+			// }
+
+			// console.log(`Top: ${colorChip.getBoundingClientRect().top + 10}`);
+			// console.log(`Left: ${colorChip.getBoundingClientRect().left + 10}`);
+			console.log(`Mouse X: ${mouse.x}`);
+			console.log(`Mouse y: ${mouse.y}`);
+			console.log(window.innerHeight - 110);
+
 		});
+
 
 	</script>
 </body>
