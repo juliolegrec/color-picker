@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+		const electron = require('electron');
+		const {ipcRenderer} = electron;
+
+		ipcRenderer.on('win:color', (e, hex) => {
+			document.body.style.background = `#${hex}`;
+		});
+	</script>
+</body>
+</html>

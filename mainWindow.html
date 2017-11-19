@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+		html {
+			cursor: crosshair;
+		}
+		#color-chip {
+			position: absolute;
+			top: calc(100% - 110px);
+			left: calc(100% - 110px);
+			width: 100px;
+			height: 100px;
+			background-color: #e21146;
+			border: 4px solid #d6d6d6;
+			border-radius: 3px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		p#color-hex {
+			font-family: Arial, Helvetica, sans-serif;
+			text-transform: uppercase;
+			background: rgba(255,255,255,0.75);
+			padding: 2.5px;
+			border-radius: 3px;
+		}
+
+	</style>
+</head>
+<body>
+	
+	<div id="color-chip">
+		<p id="color-hex">#BADA55</p>
+	</div>
+
+	<script>
+		const electron = require('electron');
+		const robot = require('robotjs');
+		const {ipcRenderer} = electron;
+
+		let colorChip = document.getElementById('color-chip');
+		let colorHex = document.getElementById('color-hex');
+
+		window.addEventListener('mousemove', () => {
+			mouse = robot.getMousePos();
+			var hex = robot.getPixelColor(mouse.x, mouse.y);
+			colorChip.style.background = `#${hex}`;
+			colorHex.innerText = `#${hex}`;
+			ipcRenderer.send('pixel:color', hex);
+
+			if(mouse.x > (window.innerWidth - 150) || mouse.y > (window.innerHeight - 150)) {
+				colorChip.style.top = `10px`;
+				colorChip.style.left = `10px`;
+			}
+			else if (mouse.x < (window.innerWidth + 150) || mouse.y > (window.innerHeight + 150))
+				colorChip.style.top = `${window.innerWidth - 150}px`;
+				colorChip.style.left = `${window.innerHeight - 150}px`;
+		});
+
+	</script>
+</body>
+</html>

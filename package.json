@@ -1,0 +1,15 @@
+{
+  "name": "color-picker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Julio Legrec",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^1.7.9",
+    "robotjs": "^0.4.7"
+  }
+}
