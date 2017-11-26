@@ -3,36 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Document</title>
-	<style>
-		* {
-			box-sizing: border-box;
-		}
-		html {
-			cursor: crosshair;
-		}
-		#color-chip {
-			position: absolute;
-			top: calc(100% - 110px);
-			left: calc(100% - 110px);
-			width: 100px;
-			height: 100px;
-			background-color: #e21146;
-			border: 4px solid #d6d6d6;
-			border-radius: 3px;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-		}
-
-		p#color-hex {
-			font-family: Arial, Helvetica, sans-serif;
-			text-transform: uppercase;
-			background: rgba(255,255,255,0.75);
-			padding: 2.5px;
-			border-radius: 3px;
-		}
-
-	</style>
+	<link rel="stylesheet" href="./style.css">
 </head>
 <body>
 	
@@ -47,29 +18,26 @@
 
 		let colorChip = document.getElementById('color-chip');
 		let colorHex = document.getElementById('color-hex');
+		let hex;
 
 		window.addEventListener('mousemove', () => {
 			let mouse = robot.getMousePos();
-			var hex = robot.getPixelColor(mouse.x, mouse.y);
+			hex = robot.getPixelColor(mouse.x, mouse.y);
 			colorChip.style.background = `#${hex}`;
 			colorHex.innerText = `#${hex}`;
-			// ipcRenderer.send('pixel:color', hex);
 
-			if(mouse.x > (window.innerHeight - 150) && mouse.y > (window.innerWidth - 150)) {
+			if (mouse.x > (window.innerWidth - 150) && mouse.y > (window.innerHeight - 150)) {
 				colorChip.style.top = `10px`;
 				colorChip.style.left = `10px`;
 			}
-			// else if(mouse.x < 150 && mouse.y < 150) {
-			// 	colorChip.style.top = `${window.innerHeight - 110}px`;
-			// 	colorChip.style.left = `${window.innerWidth - 110}px`;
-			// }
+			else if (mouse.x < 150 && mouse.y < 150) {
+				colorChip.style.top = `${window.innerHeight - 110}px`;
+				colorChip.style.left = `${window.innerWidth - 110}px`;
+			}
+		});
 
-			// console.log(`Top: ${colorChip.getBoundingClientRect().top + 10}`);
-			// console.log(`Left: ${colorChip.getBoundingClientRect().left + 10}`);
-			console.log(`Mouse X: ${mouse.x}`);
-			console.log(`Mouse y: ${mouse.y}`);
-			console.log(window.innerHeight - 110);
-
+		window.addEventListener('click', () => {
+			ipcRenderer.send('pixel:color', hex);
 		});
 
 
